@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 const PostSchema = new mongoose.Schema({
-    post_id: String,
-    site_id: String,
-    likes: Number,
+    post_id: {type: String, required: true},
+    site_id: {type: String, required: true},
+    likes: {type: Number, required: true},
 }, { timestamps: true });
 module.exports.Post = mongoose.model('Post', PostSchema);
 
