@@ -17,9 +17,9 @@ module.exports.getUser = (req, res) => {
             ? res.json(user)
             : User.create({ 
                 user_id: req.params.user_id,
-                liked_posts: [],
+                liked_posts: (req.body.liked_posts != null ? req.body.liked_posts : []),
             })
-                .then( post => res.json(post) )
+                .then( user => res.json(user) )
                 .catch( err => res.json(err) )
         ))
         .catch( err => res.json(err) );
@@ -47,14 +47,14 @@ module.exports.getPost = (req, res) => {
 // increment post's likes 
 module.exports.toggleLike = (req, res) => {
     // get user
-    User.findById(req.body.user_id)
+    User.findById(req.body._id)
         .then(user => {
-            const liked = user.liked_posts.includes(req.params.id)
+            const liked = user.liked_posts.includes(req.params.post_id)
             // update liked posts
             user.liked_posts = (
                 liked
-                ? user.liked_posts.filter( id => id !== req.params.id)
-                : [...user.liked_posts, req.params.id]
+                ? user.liked_posts.filter( id => id !== req.params.post_id)
+                : [...user.liked_posts, req.params.post_id]
             )
             user.save();
             // update post's likes

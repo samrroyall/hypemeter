@@ -9,6 +9,6 @@ module.exports.Post = mongoose.model('Post', PostSchema);
 
 const UserSchema = new mongoose.Schema({
     user_id: String,
-    liked_posts: [],
+    liked_posts: [String],
 }, { timestamps: true });
 module.exports.User = mongoose.model('User', UserSchema);
